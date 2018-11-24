@@ -31,6 +31,10 @@ class DonationTracker < Sinatra::Application
     end
   end
 
+  get "/" do
+    "Hello!"
+  end
+
   get "/total" do
     total = facebook + gofundme + adjustment
 
