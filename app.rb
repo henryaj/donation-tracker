@@ -39,6 +39,7 @@ class DonationTracker < Sinatra::Application
     total = facebook + gofundme + adjustment
 
     content_type 'text/plain'
+    headers 'Access-Control-Allow-Origin' => '*'
     total.to_s
   end
 
