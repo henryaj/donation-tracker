@@ -5,11 +5,11 @@ require 'rufus-scheduler'
 require 'nokogiri'
 
 SCRAPE_INTERVAL = ENV.fetch("SCRAPE_INTERVAL", "5m")
-FACEBOOK_FUNDRAISER_URL = ENV.fetch("FB_FUNDRAISER_URL", "https://www.facebook.com/donate/517553612043663/")
+# FACEBOOK_FUNDRAISER_URL = ENV.fetch("FB_FUNDRAISER_URL", "https://www.facebook.com/donate/517553612043663/")
 GOFUNDME_FUNDRAISER_URL = ENV.fetch("GFM_FUNDRAISER_URL", "https://www.gofundme.com/6qvna7-let039s-fund-better-science")
 GOFUNDME_FUNDRAISER_URL_2 = ENV.fetch("GFM_FUNDRAISER_URL_2", "https://www.gofundme.com/2qj7u-let039s-fund-better-science")
 
-$urls = [FACEBOOK_FUNDRAISER_URL, GOFUNDME_FUNDRAISER_URL, GOFUNDME_FUNDRAISER_URL_2]
+$urls = [GOFUNDME_FUNDRAISER_URL, GOFUNDME_FUNDRAISER_URL_2]
 
 $adjustment = 0
 $facebook = 0
@@ -17,8 +17,11 @@ $gofundme = 0
 
 scheduler = Rufus::Scheduler.new
 
+# scheduler.every SCRAPE_INTERVAL do
+#   $facebook = Scraper.scrape_facebook(FACEBOOK_FUNDRAISER_URL)
+# end
+
 scheduler.every SCRAPE_INTERVAL do
-  $facebook = Scraper.scrape_facebook(FACEBOOK_FUNDRAISER_URL)
   $gofundme = Scraper.scrape_gofundme(GOFUNDME_FUNDRAISER_URL)
   $gofundme += Scraper.scrape_gofundme(GOFUNDME_FUNDRAISER_URL_2)
 end
